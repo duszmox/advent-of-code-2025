@@ -24,13 +24,16 @@ struct Day03: AdventDay {
     }
     return sum
   }
-  
+
   func biggestJoltage(_ bank: String) -> Int {
     var dp: [(Int, Int)] = []
     bank.enumerated().forEach { idx, joltStr in
       let jolt = Int(String(joltStr)) ?? 0
-      guard idx > 0 else { dp.append((jolt, -1)); return}
-      let (prevA, prevB) = dp[idx-1]
+      guard idx > 0 else {
+        dp.append((jolt, -1))
+        return
+      }
+      let (prevA, prevB) = dp[idx - 1]
       guard idx < bank.count - 1 else {
         if prevB < jolt {
           dp.append((prevA, jolt))
@@ -39,7 +42,7 @@ struct Day03: AdventDay {
         }
         return
       }
-      
+
       if jolt > prevA {
         dp.append((jolt, -1))
       } else if prevB == -1 || prevB < jolt {
@@ -49,22 +52,24 @@ struct Day03: AdventDay {
       }
 
     }
-    
+
     let (lastA, lastB) = dp.last!
     if lastB == -1 {
       fatalError("this shouldn't be possible \(dp.last ?? (-1, -1))")
     }
-    
-    
+
     return lastA * 10 + lastB
   }
-  
+
   func biggest12Joltage(_ bank: String) -> Int {
     var dp: [[Int]] = []
     bank.enumerated().forEach { idx, joltStr in
       let jolt = Int(String(joltStr)) ?? 0
-      guard idx > 0 else { dp.append([jolt]); return}
-      let prev = dp[idx-1]
+      guard idx > 0 else {
+        dp.append([jolt])
+        return
+      }
+      let prev = dp[idx - 1]
       if prev.count < 12 {
         dp.append(prev + [jolt])
         return
@@ -82,13 +87,13 @@ struct Day03: AdventDay {
       }
       dp.append(max)
     }
-    
+
     let last = dp.last!
     let maxInt = joltArrToInt(last)
-    
+
     return maxInt
   }
-  
+
   func joltArrToInt(_ arr: [Int]) -> Int {
     arr.reduce(0) { $0 * 10 + $1 }
   }

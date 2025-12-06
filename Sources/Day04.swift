@@ -32,7 +32,9 @@ struct Day04: AdventDay {
 
   func around(_ point: (x: Int, y: Int), entities: [[Bool]]) -> Int {
     var sum = 0
-    let offsets: [(Int, Int)] = [(-1, 0), (1, 0), (0, -1), (0, 1), (1,1), (-1,-1), (1,-1), (-1,1)]
+    let offsets: [(Int, Int)] = [
+      (-1, 0), (1, 0), (0, -1), (0, 1), (1, 1), (-1, -1), (1, -1), (-1, 1),
+    ]
 
     for offset in offsets {
       if at((point.x + offset.0, point.y + offset.1), entities: entities) {
@@ -44,9 +46,9 @@ struct Day04: AdventDay {
 
   func at(_ point: (x: Int, y: Int), entities: [[Bool]]) -> Bool {
     guard point.x >= 0,
-          point.y >= 0,
-          point.x < entities.first!.count,
-          point.y < entities.count
+      point.y >= 0,
+      point.x < entities.first!.count,
+      point.y < entities.count
     else { return false }
 
     return entities[point.y][point.x]
