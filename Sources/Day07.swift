@@ -5,16 +5,15 @@ struct Day07: AdventDay {
 
   init(data: String) {
     self.data = data
-   
+
     self.mx = data.split(separator: "\n").lazy.map(Array.init)
-    
+
   }
   var data: String
-  
+
   var mx: [[Character]]
 
   var entities: Any? { nil }
-  
 
   func part1() -> Any {
     var counter = 0
@@ -22,10 +21,10 @@ struct Day07: AdventDay {
     self.calcRowLaser(1, mx: &mx, counter: &counter)
     return counter
   }
-  
-  func calcRowLaser(_ row: Int, mx:inout [[Character]], counter: inout Int) {
+
+  func calcRowLaser(_ row: Int, mx: inout [[Character]], counter: inout Int) {
     guard row > 0 && row < mx.count else { return }
-    let lastRowPositions = mx[row-1].enumerated().filter { (_, char) in
+    let lastRowPositions = mx[row - 1].enumerated().filter { (_, char) in
       char == "|" || char == "S"
     }
     for (idx, _) in lastRowPositions {
@@ -34,23 +33,23 @@ struct Day07: AdventDay {
       case ".":
         mx[row][idx] = "|"
       case "^":
-        if idx > 0 && mx[row][idx-1] == "." {
-          mx[row][idx-1] = "|"
+        if idx > 0 && mx[row][idx - 1] == "." {
+          mx[row][idx - 1] = "|"
           split = true
         }
-        if idx < mx[row].count-1 && mx[row][idx+1] == "." {
-          mx[row][idx+1] = "|"
+        if idx < mx[row].count - 1 && mx[row][idx + 1] == "." {
+          mx[row][idx + 1] = "|"
           split = true
         }
       default:
-        break;
+        break
       }
       if split {
         counter += 1
       }
     }
-    
-    calcRowLaser(row+1, mx: &mx, counter: &counter)
+
+    calcRowLaser(row + 1, mx: &mx, counter: &counter)
   }
 
   func part2() -> Any {
